@@ -12,7 +12,7 @@ async function getCollection(name) {
 }
 
 // Middleware para especificar ruta donde express buscará recursos estaticos
-app.use(express.static("build"));
+app.use(express.static(`${process.cwd()}/build`));
 
 app.get("/", async (req, res) => {
     res.sendFile(`${process.cwd()}/build/index.html`);
