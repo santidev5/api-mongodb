@@ -1,4 +1,5 @@
 import express from "express";
+import path from "node:path";
 import { connectDatabase } from "./database.js"; // <- conexion a base de datos
 import { ObjectId } from "mongodb";
 
@@ -12,10 +13,10 @@ async function getCollection(name) {
 }
 
 // Middleware para especificar ruta donde express buscará recursos estaticos
-app.use(express.static(`${process.cwd()}/build`));
+app.use(express.static(path.join(process.cwd(), "build")));
 
 app.get("/", async (req, res) => {
-    res.sendFile(`${process.cwd()}/build/index.html`);
+    res.sendFile(path.join(process.cwd(), "build", "index.html"));
 });
 
 app.get("/api/movies", async (req, res) => {
