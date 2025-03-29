@@ -41,9 +41,15 @@ let movies;
             genres.appendChild(genre);
         });
 
+        const deleteBtnContainer = document.createElement("DIV");
+        deleteBtnContainer.classList.add("movie__delete-btn-container");
+
+        const deleteBtnIcon = document.createElement("IMG");
+        deleteBtnIcon.classList.add("movie__delete-btn-icon");
+        deleteBtnIcon.src = "../images/trash.svg";
+
         const deleteBtn = document.createElement("BUTTON");
         deleteBtn.classList.add("movie__delete-btn");
-        deleteBtn.textContent = "Delete";
         deleteBtn.addEventListener("click", (e) => {
             const movieId = e.target.closest(".movie").dataset.id;
             fetch(`/${movieId}`, {
@@ -66,7 +72,9 @@ let movies;
         movieHeader.appendChild(year);
         movieContent.appendChild(movieHeader);
         movieContent.appendChild(genres);
-        movieContent.appendChild(deleteBtn);
+        deleteBtn.appendChild(deleteBtnIcon);
+        deleteBtnContainer.appendChild(deleteBtn);
+        movieContent.appendChild(deleteBtnContainer);
         posterContainer.appendChild(poster);
 
         movieContainer.appendChild(movieContent);

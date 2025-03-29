@@ -1,5 +1,5 @@
 import express from "express";
-import path from "node:path";
+import path from "node:path"; //<- necesario crear las rutas asi para que funcione en produccion
 import { connectDatabase } from "./database.js"; // <- conexion a base de datos
 import { ObjectId } from "mongodb";
 
