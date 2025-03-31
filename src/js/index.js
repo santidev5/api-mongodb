@@ -8,56 +8,14 @@
         const { movies, pages } = data;
         return {
             pagination: {
-                pages: pages,
+                pages: parseInt(pages),
                 page: parseInt(page),
             },
             movies: movies,
         };
     }
 
-    // ------------------------------- TO DO -------------------------------------------
-    async function pagination(e) {
-        const { pagination } = await getMoviesData();
-
-        const { pages, page } = pagination;
-
-        const nextBtn = document.querySelector(".pagination__next");
-        const prevBtn = document.querySelector(".pagination__prev");
-        if (page < pages) {
-            nextBtn.href = `?page=${page + 1}`;
-        }
-        if (page === 1) {
-            prevBtn.classList.add("hidden");
-        } else {
-            prevBtn.href = `?page=${page - 1}`;
-            prevBtn.classList.remove("hidden");
-        }
-
-        const halfRange = 10 / 2;
-
-        const start = Math.max(1, page - halfRange);
-        const end = Math.min(pages, page + halfRange + 1);
-
-        const paginationNumbers = document.querySelector(
-            ".pagination__numbers"
-        );
-
-        for (let index = start; index < end; index++) {
-            if (index === page) {
-                const currentP = document.createElement("SPAN");
-                currentP.classList.add("pagination__current-page");
-                currentP.textContent = index;
-                paginationNumbers.appendChild(currentP);
-            } else {
-                const numPage = document.createElement("A");
-                numPage.textContent = index;
-                numPage.classList.add("pagination__page");
-                numPage.href = `?page=${index}`;
-                paginationNumbers.appendChild(numPage);
-            }
-        }
-    }
-    pagination();
+    renderMovies();
 
     async function renderMovies() {
         const moviesC = document.querySelector(".movies");
@@ -77,7 +35,6 @@
             main.insertBefore(frgm, document.querySelector(".pagination"));
         }
     }
-    renderMovies();
 
     function createMovieElements(movie) {
         const movieC = document.createElement("DIV");
@@ -189,7 +146,7 @@
             movie.remove();
         }
         showAlert(msg);
-        renderMovies();
+        renderMovies(data);
     }
 
     function showAlert(msg, remove = true) {
@@ -213,4 +170,46 @@
             element.remove();
         }, 1500);
     }
+
+    async function pagination(data) {
+        const { pagination } = data;
+
+        const { pages, page } = pagination;
+
+        const nextBtn = document.querySelector(".pagination__next");
+        const prevBtn = document.querySelector(".pagination__prev");
+        nextBtn.href = page < pages ? `?page=${page + 1}` : "#";
+        nextBtn.classList.toggle("hidden", page === pages);
+        prevBtn.href = page > 1 ? `?page=${page - 1}` : "#";
+        prevBtn.classList.toggle("hidden", page === 1);
+
+        const halfRange = Math.floor(10 / 2);
+
+        const start = Math.max(1, page - halfRange);
+        const end = Math.min(pages, page + halfRange + 1);
+
+        const fragment = document.createDocumentFragment();
+
+        for (let index = start; index <= end; index++) {
+            if (index === page) {
+                const currentP = document.createElement("SPAN");
+                currentP.classList.add("pagination__current-page");
+                currentP.textContent = index;
+                fragment.appendChild(currentP);
+            } else {
+                const numPage = document.createElement("A");
+                numPage.textContent = index;
+                numPage.classList.add("pagination__page");
+                numPage.href = `?page=${index}`;
+                fragment.appendChild(numPage);
+            }
+        }
+        const paginationNumbers = document.querySelector(
+            ".pagination__numbers"
+        );
+        paginationNumbers.appendChild(fragment);
+    }
+
+    const data = await getMoviesData();
+    pagination(data);
 })();

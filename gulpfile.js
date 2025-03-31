@@ -2,6 +2,7 @@ import { src, dest, watch, parallel } from "gulp";
 import GulpCleanCss from "gulp-clean-css";
 import uglify from "gulp-uglify";
 import concat from "gulp-concat";
+import sourcemaps from "gulp-sourcemaps";
 
 const paths = {
     js: "./src/js/**/*.js",
@@ -17,7 +18,9 @@ function minifyCSS() {
 function minifyJS() {
     return src(paths.js)
         .pipe(concat("bundle.min.js"))
+        .pipe(sourcemaps.init())
         .pipe(uglify())
+        .pipe(sourcemaps.write("."))
         .pipe(dest("./public/src/js"));
 }
 
