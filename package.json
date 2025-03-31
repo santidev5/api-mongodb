@@ -1,19 +1,29 @@
 {
     "name": "mongodb",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "server.js",
     "type": "module",
     "scripts": {
-        "dev": "node --watch server.js",
-        "build": "node server.js"
+        "server": "node --watch ./public/app.js",
+        "gulp": "gulp dev",
+        "build": "node public/app.js "
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "cors": "2.8.5",
         "dotenv": "16.4.7",
+        "ejs": "3.1.10",
         "express": "4.21.2",
-        "mongodb": "^6.15.0"
+        "mongodb": "6.15.0",
+        "zod": "3.24.2"
+    },
+    "devDependencies": {
+        "gulp": "5.0.0",
+        "gulp-clean-css": "4.3.0",
+        "gulp-concat": "2.6.1",
+        "gulp-uglify": "3.0.2"
     }
 }

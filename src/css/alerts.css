@@ -1,0 +1,10 @@
+.alert {
+    font-size: 2.4rem;
+    font-weight: bolder;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #a33;
+}
+.alert::first-letter {
+    text-transform: uppercase;
+}

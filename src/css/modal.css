@@ -1,0 +1,11 @@
+.modal-container {
+    position: absolute;
+    z-index: 10;
+    height: 100%;
+}
+.modal {
+    border: none;
+    border-radius: 1.5rem;
+    background: #1c1c1c;
+    width: min(90%, 60rem);
+}

@@ -1,48 +1,21 @@
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-html {
-    font-size: 62.5%;
-}
-img {
-    height: 100%;
-    width: 100%;
-    display: block;
-}
-h1,
-h2 {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-        sans-serif;
-}
-body {
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-.text-center {
-    text-align: center;
-}
-.heading {
-    font-size: 4rem;
-}
 .movies {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 3rem;
+    gap: 1.5rem;
+    padding: 3rem;
 }
 .movie {
     background: whitesmoke;
     border-radius: 1.5rem;
     display: flex;
     flex-direction: column;
-    flex-basis: 30rem;
+    flex-basis: 28rem;
     overflow: hidden;
     box-shadow: 2px 2px 10px #282828b2;
     transition: 0.4s;
 }
+
 .movie:hover {
     scale: 1.01;
     box-shadow: 2px 2px 10px #282828f8;
@@ -92,14 +65,14 @@ body {
     border-radius: 1rem;
     font-weight: bold;
 }
-.movie__delete-btn-container {
+.movie__actions {
     display: flex;
     justify-content: flex-end;
+    gap: 0.5rem;
 }
-.movie__delete-btn {
+.movie__action {
     border: none;
-    background: #f33;
-    padding: 1rem;
+    padding: 0.5rem;
     font-weight: bold;
     color: #fee;
     border-radius: 1rem;
@@ -107,11 +80,30 @@ body {
     display: flex;
     align-items: center;
 }
-.movie__delete-btn:hover {
+.movie__action:hover {
     cursor: pointer;
-    background: #a33;
     scale: 1.03;
 }
-.movie__delete-btn-icon {
+.movie__action--delete {
+    background: #f33;
+}
+.movie__action--edit {
+    background: #ccc;
+}
+.movie__action--delete:hover {
+    background: #a33;
+}
+.movie__action--edit:hover {
+    background: #888;
+}
+.movie__action-icon {
     width: 2.2rem;
+}
+@media (prefers-color-scheme: dark) {
+    .movie {
+        background: #282828f8;
+    }
+    .movie__year {
+        background: #c1c1c1;
+    }
 }

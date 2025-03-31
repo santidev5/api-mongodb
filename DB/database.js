@@ -19,3 +19,10 @@ export async function connectDatabase() {
     }
     return db;
 }
+
+// Funcion para obtener colecciones
+export async function getCollection(name) {
+    const db = await connectDatabase(); // <- creamos conexion con la db
+    const collection = await db.collection(name); //<- obtener una coleccion de nuestra db
+    return collection;
+}
