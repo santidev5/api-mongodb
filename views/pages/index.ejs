@@ -1,49 +1,10 @@
-<div class="movies">
-    <% movies.forEach((movie) => { %>
-    <div class="movie" data-id="<%= movie._id %>">
-        <div class="movie__poster-container">
-            <img src="<%= movie.poster ??
-            "https://kzmnnrx7q0ns0pyx3ccz.lite.vusercontent.net/placeholder.svg?height=450&width=300";
-            %>" alt="<%= movie.title %>" class="movie__poster" />
-        </div>
-        <div class="movie__content">
-            <div class="movie__header">
-                <h2 class="movie__heading" title="<%= movie.title %>">
-                    <%= movie.title %>
-                </h2>
-                <span class="movie__year"><%= movie.year %></span>
-            </div>
-            <div class="movie__genres">
-                <% movie.genres.forEach(g=>{ %>
-                <p class="movie__genre"><%= g %></p>
-                <% }) %>
-            </div>
-            <div class="movie__actions">
-                <button
-                    class="movie__action movie__action--edit"
-                    id="edit"
-                    title="Edit"
-                >
-                    <img
-                        src="/src/images/pencil.svg"
-                        alt="pen icon"
-                        class="movie__action-icon"
-                    />
-                </button>
-                <button
-                    class="movie__action movie__action--delete"
-                    title="Delete"
-                    id="delete"
-                >
-                    <img
-                        src="/src/images/trash.svg"
-                        alt="trash icon"
-                        class="movie__action-icon"
-                    />
-                </button>
-            </div>
-        </div>
-    </div>
-    <% }) %>
+<div class="movies"></div>
+<div class="pagination">
+    <a class="pagination__prev">
+        <img src="/src/images/chevron-left.svg" alt="Chevron left" />
+    </a>
+    <div class="pagination__numbers"></div>
+    <a class="pagination__next">
+        <img src="/src/images/chevron-left.svg" alt="Chevron right" />
+    </a>
 </div>
-<%- pagination %>

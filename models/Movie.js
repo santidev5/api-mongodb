@@ -13,7 +13,10 @@ export class MovieModel {
     static async getByOffset(offset, logsPerPage) {
         await this.initCollection();
         const movies = await this.collection
-            .find()
+            .find(
+                {},
+                { projection: { title: 1, year: 1, poster: 1, genres: 1 } } // <- traemos solo esos campos, no se pueden mezclar 1 y 0
+            )
             .skip(offset)
             .limit(logsPerPage)
             .toArray();

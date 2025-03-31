@@ -4,3 +4,6 @@
 .heading {
     font-size: 6rem;
 }
+.hidden {
+    visibility: hidden;
+}

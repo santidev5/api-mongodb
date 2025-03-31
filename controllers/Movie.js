@@ -1,4 +1,3 @@
-import { Pagination } from "../classes/Pagination.js";
 import { MovieModel } from "../models/Movie.js";
 import { validateId } from "../schemas/schemas.js";
 
@@ -9,25 +8,13 @@ export class MovieController {
         if (isNaN(page)) {
             return res.redirect("?page=1");
         }
-        const totalLogs = await MovieModel.getTotalLogs();
-        const pagination = new Pagination(totalLogs, 10, page);
-        const movies = await MovieModel.getByOffset(
-            pagination.offset(),
-            pagination.logsPerPage
-        );
         res.render("layout", {
-            modal: "components/modal",
-            content: "pages/index", // <- importa index de la carpeta pages dentro de la carpeta vistas
+            content: "pages/index",
             title: "Movies",
-            movies: movies,
-            pagination: pagination.pagination(),
         });
     }
     static async delete(req, res) {
-        console.log(req.params.id);
-
         const result = await validateId({ id: req.params.id }); //<- destructuramos porque el id viene como objeto
-        console.log(result);
 
         const id = result.data;
         if (result.success) {

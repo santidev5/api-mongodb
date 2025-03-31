@@ -3,9 +3,9 @@
 *::after {
     box-sizing: border-box;
 }
-:root {
+/* :root {
     color-scheme: light dark;
-}
+} */
 html {
     font-size: 62.5%;
 }
@@ -30,4 +30,11 @@ body {
 }
 html:has(.modal[open]) main {
     filter: blur(5px);
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
 }

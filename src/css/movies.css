@@ -99,11 +99,11 @@
 .movie__action-icon {
     width: 2.2rem;
 }
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     .movie {
         background: #282828f8;
     }
     .movie__year {
         background: #c1c1c1;
     }
-}
+} */

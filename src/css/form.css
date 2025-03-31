@@ -2,13 +2,66 @@
     display: grid;
     gap: 2rem;
     padding: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+.form__field--genres {
+    grid-column: span 2;
+}
+.form__field--image {
+    grid-column: span 2;
 }
 .form__label {
     display: block;
-    margin-bottom: 0.2rem;
-    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
     font-weight: bold;
 }
-.form__input {
+.form__input,
+.form__label--image {
     width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1.5px solid #bebebe;
+    transition: 0.4s;
+}
+.form__input:focus {
+    border: 1px solid #222;
+    scale: 1.01;
+}
+
+.form__input--image {
+    display: none;
+}
+.form__label--image {
+    display: grid;
+    place-content: center;
+    margin: 0;
+    height: 10rem;
+}
+.form__label--image:hover {
+    cursor: pointer;
+    border-style: dashed;
+}
+
+.form__actions {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    grid-column: span 2;
+}
+.form__button {
+    padding: 0.8rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    border: 1px solid #bebebe;
+    background: inherit;
+    transition: 0.3s;
+}
+.form__button:hover {
+    cursor: pointer;
+    scale: 1.015;
+}
+.form__button.form__button--save {
+    background: #222;
+    color: #fefefe;
 }
