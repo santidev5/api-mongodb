@@ -1,0 +1,57 @@
+<div class="modal-container">
+    <dialog class="modal">
+        <form class="form">
+            <div class="form__field form__field--title">
+                <label for="title" class="form__label">Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    class="form__input"
+                    placeholder="Movie title"
+                />
+            </div>
+            <div class="form__field form__field--year">
+                <label for="year" class="form__label">Year</label>
+                <input
+                    type="number"
+                    name="year"
+                    id="year"
+                    class="form__input"
+                />
+            </div>
+            <div class="form__field form__field--genres">
+                <label for="genres" class="form__label">Genres</label>
+                <input
+                    type="text"
+                    name="genres"
+                    id="genres"
+                    class="form__input"
+                    placeholder='Movie genres separated by "","'
+                />
+            </div>
+            <div class="form__field form__field--image">
+                <label for="image" class="form__label">Image</label>
+                <label for="image" class="form__label form__label--image"
+                    >Click to upload an image</label
+                >
+                <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    class="form__input form__input--image"
+                    accept=".jpg,.webp,.png,.jpge"
+                />
+            </div>
+
+            <div class="form__actions">
+                <button class="form__button form__button--cancel">
+                    Cancel
+                </button>
+                <button class="form__button form__button--save">
+                    Save changes
+                </button>
+            </div>
+        </form>
+    </dialog>
+</div>

@@ -9,7 +9,7 @@ export class APIMoviesController {
             return res.redirect("?page=1");
         }
         const totalLogs = await MovieModel.getTotalLogs();
-        const pagination = new Pagination(totalLogs, 10, page);
+        const pagination = new Pagination(totalLogs, 5, page);
         const movies = await MovieModel.getByOffset(
             pagination.offset(),
             pagination.logsPerPage

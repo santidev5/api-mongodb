@@ -1,3 +1,4 @@
+import { Pagination } from "../classes/Pagination.js";
 import { MovieModel } from "../models/Movie.js";
 import { validateId } from "../schemas/schemas.js";
 
@@ -8,8 +9,11 @@ export class MovieController {
         if (isNaN(page)) {
             return res.redirect("?page=1");
         }
+        const totalLogs = await MovieModel.getTotalLogs();
+        const pagination = new Pagination(totalLogs, 10, page);
         res.render("layout", {
             content: "pages/index",
+            pagination: pagination.pagination(),
             title: "Movies",
         });
     }

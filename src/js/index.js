@@ -3,36 +3,41 @@
         const params = new URLSearchParams(window.location.search);
         const page = params.get("page");
 
-        const res = await fetch(`/api/movies?page=${page}`);
-        const data = await res.json();
-        const { movies, pages } = data;
-        return {
-            pagination: {
-                pages: parseInt(pages),
-                page: parseInt(page),
-            },
-            movies: movies,
-        };
+        try {
+            const res = await fetch(`/api/movies?page=${page}`);
+
+            const data = await res.json();
+
+            const { movies, pages } = data;
+            return {
+                pagination: {
+                    pages: parseInt(pages),
+                    page: parseInt(page),
+                },
+                movies: movies,
+            };
+        } catch (e) {
+            showAlert("404 not found");
+            const pagination = document.querySelector(".pagination");
+            pagination.remove();
+            return;
+        }
     }
-
     renderMovies();
-
     async function renderMovies() {
         const moviesC = document.querySelector(".movies");
-        if (moviesC) {
-            moviesC.innerHTML = "";
+        while (moviesC.children.length > 0) {
+            moviesC.firstElementChild.remove();
         }
         const { movies } = await getMoviesData();
         if (movies.length > 0) {
             const frgm = document.createDocumentFragment();
             movies.forEach((movie) => {
                 const movieC = createMovieElements(movie);
-                moviesC.appendChild(movieC);
+                frgm.appendChild(movieC);
             });
 
-            frgm.appendChild(moviesC);
-            const main = document.querySelector("main");
-            main.insertBefore(frgm, document.querySelector(".pagination"));
+            moviesC.appendChild(frgm);
         }
     }
 
@@ -62,9 +67,13 @@
             movie.poster ??
             "https://kzmnnrx7q0ns0pyx3ccz.lite.vusercontent.net/placeholder.svg?height=450&width=300";
         poster.alt = movie.title;
+        poster.loading = "lazy";
+        poster.width = 280;
+        poster.heigth = 420;
         posterC.appendChild(poster);
         return posterC;
     }
+
     function createContent(movie) {
         const content = document.createElement("DIV");
         content.classList.add("movie__content");
@@ -84,10 +93,10 @@
         header.appendChild(h2);
         header.appendChild(year);
 
-        const genres = document.createElement("DIV");
+        const genres = document.createElement("ul");
         genres.classList.add("movie__genres");
         movie.genres.forEach((g) => {
-            const genre = document.createElement("P");
+            const genre = document.createElement("li");
             genre.classList.add("movie__genre");
             genre.textContent = g;
             genres.appendChild(genre);
@@ -107,8 +116,6 @@
         editBtn.classList.add("movie__action", "movie__action--edit");
         editBtn.title = "Edit movie";
         editBtn.onclick = () => {
-            renderModal();
-            const modal = document.querySelector(".modal");
             modal.showModal();
         };
         const editBtnIcon = document.createElement("IMG");
@@ -137,32 +144,31 @@
     }
 
     async function deleteMovie(movieId) {
-        const res = await fetch(`/${movieId}`, {
-            method: "DELETE",
-        });
-        const { state, msg } = await res.json();
-        if (state === 1) {
-            const movie = document.querySelector(`[data-id='${movieId}']`);
-            movie.remove();
+        try {
+            const res = await fetch(`/${movieId}`, {
+                method: "DELETE",
+            });
+            const { state, msg } = await res.json();
+            if (state === 1) {
+                const movie = document.querySelector(`[data-id='${movieId}']`);
+                movie.remove();
+            }
+            showAlert(msg);
+        } catch (e) {
+            showAlert("404 not found, movie couldn't be deleted");
         }
-        showAlert(msg);
-        renderMovies(data);
+        renderMovies();
     }
 
     function showAlert(msg, remove = true) {
-        const prevAlert = document.querySelector(".alerts");
-        if (prevAlert) {
-            prevAlert.remove();
-        }
-        const alerts = document.createElement("DIV");
-        alerts.classList.add("alerts");
+        const alerts = document.querySelector(".alerts");
         const alert = document.createElement("P");
         alert.classList.add("alert", "text-center");
         alert.textContent = msg;
-        alerts.appendChild(alert);
-        const main = document.querySelector("main");
-        main.insertBefore(alerts, document.querySelector(".movies"));
-        deleteAlert(alerts);
+        if (alerts.children.length < 0) {
+            alerts.appendChild(alert);
+        }
+        deleteAlert(alert);
     }
 
     function deleteAlert(element) {
@@ -170,46 +176,5 @@
             element.remove();
         }, 1500);
     }
-
-    async function pagination(data) {
-        const { pagination } = data;
-
-        const { pages, page } = pagination;
-
-        const nextBtn = document.querySelector(".pagination__next");
-        const prevBtn = document.querySelector(".pagination__prev");
-        nextBtn.href = page < pages ? `?page=${page + 1}` : "#";
-        nextBtn.classList.toggle("hidden", page === pages);
-        prevBtn.href = page > 1 ? `?page=${page - 1}` : "#";
-        prevBtn.classList.toggle("hidden", page === 1);
-
-        const halfRange = Math.floor(10 / 2);
-
-        const start = Math.max(1, page - halfRange);
-        const end = Math.min(pages, page + halfRange + 1);
-
-        const fragment = document.createDocumentFragment();
-
-        for (let index = start; index <= end; index++) {
-            if (index === page) {
-                const currentP = document.createElement("SPAN");
-                currentP.classList.add("pagination__current-page");
-                currentP.textContent = index;
-                fragment.appendChild(currentP);
-            } else {
-                const numPage = document.createElement("A");
-                numPage.textContent = index;
-                numPage.classList.add("pagination__page");
-                numPage.href = `?page=${index}`;
-                fragment.appendChild(numPage);
-            }
-        }
-        const paginationNumbers = document.querySelector(
-            ".pagination__numbers"
-        );
-        paginationNumbers.appendChild(fragment);
-    }
-
-    const data = await getMoviesData();
-    pagination(data);
 })();
+const modal = document.querySelector(".modal");
