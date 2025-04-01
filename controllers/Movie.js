@@ -5,14 +5,24 @@ import { validateId } from "../schemas/schemas.js";
 export class MovieController {
     static async index(req, res) {
         const page = parseInt(req.query.page);
+        const result = await validateId(req.query);
+        console.log(result);
+
+        let movieToUpdate = {};
+        if (result.success) {
+            const movieId = result.data;
+            const { movie } = await MovieModel.getById(movieId);
+        }
         // En caso de que la pagina no sea un numero
         if (isNaN(page)) {
             return res.redirect("?page=1");
         }
         const totalLogs = await MovieModel.getTotalLogs();
         const pagination = new Pagination(totalLogs, 10, page);
+
         res.render("layout", {
             content: "pages/index",
+            updateMovie: movie,
             pagination: pagination.pagination(),
             title: "Movies",
         });
@@ -41,4 +51,6 @@ export class MovieController {
         }
     }
     static async update(req, res) {}
+
+    static async create(req, res) {}
 }

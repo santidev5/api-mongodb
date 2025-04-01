@@ -23,6 +23,7 @@
             return;
         }
     }
+
     renderMovies();
     async function renderMovies() {
         const moviesC = document.querySelector(".movies");
@@ -115,9 +116,10 @@
         const editBtn = document.createElement("BUTTON");
         editBtn.classList.add("movie__action", "movie__action--edit");
         editBtn.title = "Edit movie";
-        editBtn.onclick = () => {
-            modal.showModal();
+        editBtn.onclick = (e) => {
+            showForm(e);
         };
+
         const editBtnIcon = document.createElement("IMG");
         editBtnIcon.classList.add("movie__action-icon");
         editBtnIcon.src = "/src/images/pencil.svg";
@@ -175,6 +177,16 @@
         setTimeout(() => {
             element.remove();
         }, 1500);
+    }
+
+    function showForm(e) {
+        modal.showModal();
+        const movieId = e.target.closest(".movie").dataset.id;
+        try {
+            fetch();
+        } catch (e) {
+            console.log(e);
+        }
     }
 })();
 const modal = document.querySelector(".modal");

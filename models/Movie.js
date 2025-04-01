@@ -22,6 +22,13 @@ export class MovieModel {
             .toArray();
         return movies;
     }
+    static async getById(movieId) {
+        await this.initCollection();
+        const movie = await this.collection
+            .find({ _id: ObjectId.createFromHexString(movieId) })
+            .toArray();
+        return movie[0];
+    }
     static async getTotalLogs() {
         await this.initCollection();
         return await this.collection.countDocuments();
